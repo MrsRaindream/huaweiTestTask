@@ -17,31 +17,28 @@ public class MergeLogicAsArray {
      * Merge two arrays
      * @param arrayX first one array to merge
      * @param arrayY second one array to merge
+     * @param m count of real elements x
+     * @param n count of real elements y
      * @return merged array
      */
-    public static int[] mergeArray(int[] arrayX, int[] arrayY) {
-        int xPosition = 0;
-        int yPosition = 0;
-        int resPosition = 0;
-        int[] resultArray = new int[arrayX.length + arrayY.length];
+    public static int[] mergeArray(int[] arrayX, int m, int[] arrayY, int n) {
+        m--;
+        n--;
+        int index = arrayX.length - 1;
 
-        while (xPosition < arrayX.length && yPosition < arrayY.length) {
-            if (arrayX[xPosition] < arrayY[yPosition]) {
-                resultArray[resPosition++] = arrayX[xPosition++];
+        while (index >= 0) {
+            if (m < 0) {
+                arrayX[index] = arrayY[n];
+                n--;
+            } else if (n < 0) {
+                arrayX[index] = arrayX[m];
+                m--;
             } else {
-                resultArray[resPosition++] = arrayY[yPosition++];
+                arrayX[index] = (arrayX[m] > arrayY[n]) ? arrayX[m--] : arrayY[n--];
             }
+            index--;
         }
-
-        while (xPosition < arrayX.length) {
-            resultArray[resPosition++] = arrayX[xPosition++];
-        }
-
-        while (yPosition < arrayY.length) {
-            resultArray[resPosition++] = arrayY[yPosition++];
-        }
-
-        return resultArray;
+        return arrayX;
     }
 }
 
